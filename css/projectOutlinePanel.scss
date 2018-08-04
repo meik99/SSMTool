@@ -1,0 +1,44 @@
+@import "layout";
+
+.project-outline {
+  background-color: $background-negative-color;
+  color: $foreground-negative-color;
+
+  width: 25%;
+  position: relative;
+
+  padding: 1px;
+}
+
+.project-outline-title{
+  text-align: center;
+}
+
+.project-outline-title h2{
+  padding-bottom: 5px;
+  border-bottom: 1px solid $background-accent-negative-color;
+}
+
+.project-outline-button-container{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.project-outline-button{
+  width: 48%;
+  height: 48px;
+  border: 1px solid $background-accent-negative-color;
+  background-color: $background-negative-color;
+  color: $foreground-negative-color;
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+.project-outline-button:hover{
+  background-color: $background-accent-negative-color;
+}
+
+.project-outline-button:active{
+  background-color: black;
+}

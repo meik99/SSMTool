@@ -1,0 +1,29 @@
+{
+  "name": "ssmtool",
+  "version": "0.0.1",
+  "description": "A tool to help programmers collect and edit diagramms easily and efficiently",
+  "main": "main.js",
+  "scripts": {
+    "test": "test",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meik99/SSMTool.git"
+  },
+  "keywords": [
+    "ssm",
+    "tool",
+    "ssmtool"
+  ],
+  "author": "Rammerstorfer Niklas, Michael Rynkiewicz",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/meik99/SSMTool/issues"
+  },
+  "homepage": "https://github.com/meik99/SSMTool#readme",
+  "devDependencies": {
+    "electron": "2.0.6",
+    "electron-reload": "^1.2.5"
+  }
+}

@@ -1,0 +1,38 @@
+html, body {
+  font-family: Arial, sans-serif; }
+
+.project-outline {
+  background-color: #323232;
+  color: white;
+  width: 25%;
+  position: relative;
+  padding: 1px; }
+
+.project-outline-title {
+  text-align: center; }
+
+.project-outline-title h2 {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #3c3c3c; }
+
+.project-outline-button-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%; }
+
+.project-outline-button {
+  width: 48%;
+  height: 48px;
+  border: 1px solid #3c3c3c;
+  background-color: #323232;
+  color: white;
+  border-radius: 5px;
+  box-shadow: none; }
+
+.project-outline-button:hover {
+  background-color: #3c3c3c; }
+
+.project-outline-button:active {
+  background-color: black; }
+
+/*# sourceMappingURL=projectOutlinePanel.css.map */

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>SSM Tool</title>
+
+    <link rel="stylesheet" href="css/layout.css"/>
+    <link rel="stylesheet" href="css/projectOutlinePanel.css"/>
+</head>
+<body>
+    <div class="project-outline" id="projectOutlinePanel">
+        <div class="project-outline-title">
+            <h2>Project</h2>
+        </div>
+        <div class="project-outline-button-container">
+            <button class="project-outline-button">+</button>
+            <button class="project-outline-button">-</button>
+        </div>
+    </div>
+
+<script>
+    const {ipcRenderer} = require("electron");
+
+    window.onresize = function() {
+        setPageSize();
+    };
+
+    function setPageSize() {
+        ipcRenderer.send("window", "send");
+
+        ipcRenderer.on("window", function (event, args) {
+            if(args && args.height) {
+                var projectOutlinePanel = document.getElementById("projectOutlinePanel");
+
+                projectOutlinePanel.style.height = (args.height - 2) + "px";
+            }
+        });
+    }
+
+    setPageSize();
+</script>
+</body>
+</html>
