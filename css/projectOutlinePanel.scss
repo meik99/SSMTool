@@ -1,11 +1,15 @@
 @import "layout";
 
+.project-outline-container{
+  flex-grow: 2;
+}
+
 .project-outline {
   background-color: $background-negative-color;
   color: $foreground-negative-color;
-
-  width: 25%;
   position: relative;
+
+  border-radius: 4px;
 
   padding: 1px;
 }

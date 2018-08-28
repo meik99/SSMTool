@@ -1,6 +1,12 @@
 html, body {
   font-family: Arial, sans-serif; }
 
+.container {
+  display: flex; }
+
+.project-outline-container {
+  flex-grow: 1; }
+
 .project-outline {
   background-color: #323232;
   color: white;

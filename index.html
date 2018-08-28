@@ -5,22 +5,33 @@
 
     <title>SSM Tool</title>
 
-    <link rel="stylesheet" href="css/layout.css"/>
-    <link rel="stylesheet" href="css/projectOutlinePanel.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-    <div class="project-outline" id="projectOutlinePanel">
-        <div class="project-outline-title">
-            <h2>Project</h2>
+    <div class="container">
+        <div class="project-outline-container" id="project-outline-container">
+            <div class="project-outline" id="projectOutlinePanel">
+                <div class="project-outline-title">
+                    <h2>Project</h2>
+                </div>
+                <div class="project-outline-button-container">
+                    <button class="project-outline-button">+</button>
+                    <button class="project-outline-button">-</button>
+                </div>
+            </div>
         </div>
-        <div class="project-outline-button-container">
-            <button class="project-outline-button">+</button>
-            <button class="project-outline-button">-</button>
+        <div class="diagram-container" id="diagram-container">
+            <div class="diagram-editor" id="diagram-editor">
+                <textarea class="diagram-editor-textarea" wrap="hard"></textarea>
+            </div>
+            <div class="diagram-renderer" id="diagram-renderer">
+                <canvas class="diagram-renderer-canvas"></canvas>
+            </div>
         </div>
     </div>
-
 <script>
     const {ipcRenderer} = require("electron");
+    const split = require("split.js");
 
     window.onresize = function() {
         setPageSize();
@@ -39,6 +50,8 @@
     }
 
     setPageSize();
+
+    split(["#diagram-editor", "#diagram-renderer"], {});
 </script>
 </body>
 </html>
