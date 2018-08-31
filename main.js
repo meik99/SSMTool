@@ -4,7 +4,6 @@ const path = require("path");
 
 const { app, BrowserWindow, ipcMain } = electron;
 
-require("electron-reload")(__dirname);
 
 let window;
 
@@ -32,7 +31,14 @@ function createWindow(){
     });
 }
 
-app.on("ready", createWindow);
+function onReady() {
+    app.commandLine.appendSwitch("remote-debugging-port", "9222");
+    require("electron-reload")(__dirname);
+
+    createWindow();
+}
+
+app.on("ready", onReady);
 
 app.on("window-all-closed", () => {
     if(process.platform !== "darwin"){

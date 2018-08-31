@@ -22,7 +22,8 @@
         </div>
         <div class="diagram-container" id="diagram-container">
             <div class="diagram-editor" id="diagram-editor">
-                <textarea class="diagram-editor-textarea" wrap="hard"></textarea>
+                <textarea class="diagram-editor-textarea" id="diagram-editor-textarea" wrap="hard"
+                    placeholder="Script your diagram" autofocus>!#</textarea>
             </div>
             <div class="diagram-renderer" id="diagram-renderer">
                 <canvas class="diagram-renderer-canvas"></canvas>
@@ -32,9 +33,12 @@
 <script>
     const {ipcRenderer} = require("electron");
     const split = require("split.js");
+    const Lexer = require("./interpreter/Lexer");
+    const Scanner = require("./interpreter/Scanner");
 
     window.onresize = function() {
         setPageSize();
+        focusEditor();
     };
 
     function setPageSize() {
@@ -49,9 +53,30 @@
         });
     }
 
-    setPageSize();
+    function focusEditor(){
+        var textarea = document.getElementById("diagram-editor-textarea");
+        var textLength = textarea.value.length;
 
-    split(["#diagram-editor", "#diagram-renderer"], {});
+        textarea.focus();
+    }
+
+    function setupEventHandler(){
+        var textEditor = document.getElementById("diagram-editor-textarea");
+
+        textEditor.onkeyup = function(){
+            var lexer = new Lexer.Lexer(
+                new Scanner.Scanner(
+                    textEditor.value
+                )
+            );
+            lexer.analyse();
+        };
+    }
+
+    setPageSize();
+    setupEventHandler();
+    split(["#diagram-editor", "#diagram-renderer"], {
+    });
 </script>
 </body>
 </html>

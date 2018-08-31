@@ -1,0 +1,5 @@
+{
+  "inlineSources": true,
+  "sourceMap": true,
+  "target": "es6"
+}
