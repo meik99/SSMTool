@@ -26,20 +26,70 @@
                     placeholder="Script your diagram" autofocus>!#</textarea>
             </div>
             <div class="diagram-renderer" id="diagram-renderer">
-                <canvas class="diagram-renderer-canvas"></canvas>
+                <canvas class="diagram-renderer-canvas" id="diagram-renderer-canvas"></canvas>
             </div>
         </div>
     </div>
 <script>
     const {ipcRenderer} = require("electron");
     const split = require("split.js");
-    const Lexer = require("./interpreter/Lexer");
-    const Scanner = require("./interpreter/Scanner");
+    var canvasRatioSet = false;
 
     window.onresize = function() {
         setPageSize();
         focusEditor();
     };
+
+    var PIXEL_RATIO = (function () {
+        var ctx = document.getElementById("diagram-renderer-canvas").getContext("2d");
+            dpr = window.devicePixelRatio || 1,
+            bsr = ctx.webkitBackingStorePixelRatio ||
+                ctx.mozBackingStorePixelRatio ||
+                ctx.msBackingStorePixelRatio ||
+                ctx.oBackingStorePixelRatio ||
+                ctx.backingStorePixelRatio || 1;
+
+        return dpr / bsr;
+    })();
+
+    createHiDPICanvas = function(w, h, can) {
+        let ratio = PIXEL_RATIO;
+        can.width = w * ratio;
+        can.height = h * ratio;
+        can.style.width = w + "px";
+        can.style.height = h + "px";
+        can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+        return can;
+    };
+
+    function renderACDObjects(args) {
+        let canvas = document.getElementById("diagram-renderer-canvas");
+        let editor = document.getElementById("diagram-editor");
+        let renderer = document.getElementById("diagram-renderer");
+
+        if(canvasRatioSet == false) {
+            canvas = createHiDPICanvas(renderer.clientWidth, renderer.clientHeight, canvas);
+            canvasRatioSet = true;
+        }
+
+        let context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        console.log(args);
+        args.forEach(function(item) {
+            console.log(item);
+            if(item.type === "title"){
+                context.font = "1.5em Arial";
+                context.fillText(item.text, 10, 30);
+            } else if(item.type === "rect"){
+                context.strokeRect(10, 50, parseInt(item.width), parseInt(item.height));
+            }
+        });
+    }
+
+    ipcRenderer.on("code", (event, args) => {
+        renderACDObjects(args);
+    });
 
     function setPageSize() {
         ipcRenderer.send("window", "send");
@@ -64,12 +114,7 @@
         var textEditor = document.getElementById("diagram-editor-textarea");
 
         textEditor.onkeyup = function(){
-            var lexer = new Lexer.Lexer(
-                new Scanner.Scanner(
-                    textEditor.value
-                )
-            );
-            lexer.analyse();
+            ipcRenderer.send("code", textEditor.value);
         };
     }
 

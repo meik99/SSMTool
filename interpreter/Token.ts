@@ -1,5 +1,6 @@
 export class Token {
     static WORD = "WORD";
+    static NEWLINE = "NEWLINE";
 
     constructor(key: string) {
         this._key = key;

@@ -1,6 +1,7 @@
-body {
-  font-family: Arial, SansSerif;
-  padding: 0px;
-  margin: 0px; }
+html, body {
+  font-family: Arial, sans-serif; }
+
+.container {
+  display: flex; }
 
 /*# sourceMappingURL=layout.css.map */

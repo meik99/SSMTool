@@ -5,13 +5,13 @@ html, body {
   display: flex; }
 
 .project-outline-container {
-  flex-grow: 1; }
+  flex-grow: 2; }
 
 .project-outline {
   background-color: #323232;
   color: white;
-  width: 25%;
   position: relative;
+  border-radius: 4px;
   padding: 1px; }
 
 .project-outline-title {

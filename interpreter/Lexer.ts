@@ -1,36 +1,40 @@
 import {Scanner} from "./Scanner";
 import {Token} from "./Token";
 import {ACDTokens} from "./token/ACDTokens";
+import {ITokens} from "./token/ITokens";
 
 export class Lexer {
     private _scanner: Scanner;
     private _token: Token[];
+    private _tokenSet: Token[];
 
     constructor(
-        scanner: Scanner
+        scanner: Scanner,
+        iTokens: ITokens
     ) {
         this._scanner = scanner;
         this._token = [];
-
-        this._scanner.scan();
+        this._tokenSet = iTokens.tokens();
     }
 
-    public analyse() {
+    public analyse(): Token[] {
+        this._scanner.scan();
         let currentWord: string = "";
-        let currentToken: Token = null;
 
-        while (this._scanner.hasNext()) {
+        while (this._scanner.hasNext() ||
+            (this._scanner.hasNext() === false && currentWord !== null && currentWord !== "")) {
             let character = this._scanner.getCurrentCharacter();
 
-            if ((character === " " ||
+            if (((character === " " ||
                 character === "\n" ||
                 character === "\r" ||
                 character === "\t") &&
                 currentWord !== null &&
-                currentWord !== "") {
+                currentWord !== "") ||
+                (this._scanner.hasNext() === false && currentWord !== null && currentWord !== "")) {
                 let isToken = false;
 
-                ACDTokens.tokens.forEach(
+                this._tokenSet.forEach(
                     (item) => {
                         if(this.checkIfWordIsToken(currentWord, item) === true){
                             isToken = true;
@@ -40,16 +44,22 @@ export class Lexer {
 
                 if(isToken == false){
                     let token = new Token(Token.WORD);
-
                     token.value = currentWord;
                     this._token.push(token);
                 }
 
+                if(character === "\n"){
+                    isToken = true;
+                    this._token.push(new Token(Token.NEWLINE));
+                }
+
                 currentWord = "";
-            } else {
+            } else if(character != undefined){
                 currentWord += character;
             }
         }
+
+        return this._token;
     }
 
     protected checkIfWordIsToken(key: string, token: Token){
