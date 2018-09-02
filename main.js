@@ -21,7 +21,7 @@ function createWindow() {
     }));
     brwoserWindow.webContents.openDevTools();
     brwoserWindow.on("close", function () {
-        window = null;
+        brwoserWindow = null;
     });
 }
 function onReady() {
@@ -36,7 +36,7 @@ app.on("window-all-closed", function () {
     }
 });
 app.on("activate", function () {
-    if (window === null) {
+    if (brwoserWindow === null) {
         createWindow();
     }
 });

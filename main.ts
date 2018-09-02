@@ -30,7 +30,7 @@ function createWindow(){
     brwoserWindow.webContents.openDevTools();
 
     brwoserWindow.on("close", () => {
-        window = null;
+        brwoserWindow = null;
     });
 }
 
@@ -50,7 +50,7 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-    if(window === null){
+    if(brwoserWindow === null){
         createWindow();
     }
 });

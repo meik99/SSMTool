@@ -2,10 +2,17 @@ $background-negative-color: rgb(50, 50, 50);
 $background-accent-negative-color: rgb(60, 60, 60);
 $foreground-negative-color: white;
 
+*{
+  padding: 0;
+  margin: 0;
+}
+
 html, body {
   font-family: Arial, sans-serif;
+  height: 99%;
 }
 
 .container{
   display: flex;
+  height: 100%;
 }

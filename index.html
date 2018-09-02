@@ -9,17 +9,17 @@
 </head>
 <body>
     <div class="container">
-        <div class="project-outline-container" id="project-outline-container">
-            <div class="project-outline" id="projectOutlinePanel">
-                <div class="project-outline-title">
-                    <h2>Project</h2>
-                </div>
-                <div class="project-outline-button-container">
-                    <button class="project-outline-button">+</button>
-                    <button class="project-outline-button">-</button>
-                </div>
-            </div>
-        </div>
+        <!--<div class="project-outline-container" id="project-outline-container">-->
+            <!--<div class="project-outline" id="projectOutlinePanel">-->
+                <!--<div class="project-outline-title">-->
+                    <!--<h2>Project</h2>-->
+                <!--</div>-->
+                <!--<div class="project-outline-button-container">-->
+                    <!--<button class="project-outline-button">+</button>-->
+                    <!--<button class="project-outline-button">-</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="diagram-container" id="diagram-container">
             <div class="diagram-editor" id="diagram-editor">
                 <textarea class="diagram-editor-textarea" id="diagram-editor-textarea" wrap="hard"
@@ -32,11 +32,9 @@
     </div>
 <script>
     const {ipcRenderer} = require("electron");
-    const split = require("split.js");
     var canvasRatioSet = false;
 
     window.onresize = function() {
-        setPageSize();
         focusEditor();
     };
 
@@ -68,7 +66,7 @@
         let renderer = document.getElementById("diagram-renderer");
 
         if(canvasRatioSet == false) {
-            canvas = createHiDPICanvas(renderer.clientWidth, renderer.clientHeight, canvas);
+            canvas = createHiDPICanvas(canvas.clientWidth, canvas.clientHeight, canvas);
             canvasRatioSet = true;
         }
 
@@ -91,18 +89,6 @@
         renderACDObjects(args);
     });
 
-    function setPageSize() {
-        ipcRenderer.send("window", "send");
-
-        ipcRenderer.on("window", function (event, args) {
-            if(args && args.height) {
-                var projectOutlinePanel = document.getElementById("projectOutlinePanel");
-
-                projectOutlinePanel.style.height = (args.height - 2) + "px";
-            }
-        });
-    }
-
     function focusEditor(){
         var textarea = document.getElementById("diagram-editor-textarea");
         var textLength = textarea.value.length;
@@ -118,10 +104,7 @@
         };
     }
 
-    setPageSize();
     setupEventHandler();
-    split(["#diagram-editor", "#diagram-renderer"], {
-    });
 </script>
 </body>
 </html>
